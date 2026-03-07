@@ -20,11 +20,57 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <link rel="stylesheet" href="styles/style.cs">
+
+    <style>
+        * {
+            font-family: "Geist", sans-serif;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-[#F8FAFC] text-[16px]">
+    <!-- login section -->
+    <section class="flex items-center justify-center min-h-screen">
+        <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-8 text-[#374151] shadow-sm">
+            <div class="flex flex-col items-center justify-center text-center">
+                <img src="assets/github-logo.png" alt="Github logo" class="mx-auto">
+                <h1 class="text-2xl font-semibold">GitHub Issues Tracker</h1>
+                <p class="text-sm">Sign in to manage your issues</p>
 
-    <h2 class="caret-lime-500 p-2">This is testing</h2>
+            </div>
+
+
+            <label class="label font-bold">Username</label>
+            <input type="text" class="input" placeholder="Enter Username" />
+            <p class="text-blue-800">Defult: admin</p>
+
+            <label class="label font-bold">Password</label>
+            <input type="password" class="input" placeholder="Enter Password" />
+            <p class="text-blue-800">Defult: admin123</p>
+
+            <button class="btn btn-primary mt-4 rounded-lg">Sign in</button>
+
+            <div class="flex items-center py-6">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="px-4 text-[#374151]">OR</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center text-center">
+                <p class="text-sm text-[#64748B]">Demo Credentials</p>
+
+                <div class="text-[16px] w-full py-6 bg-[#F8FAFC] mt-1">
+                    <p><span class="font-bold">Username:</span> admin</p>
+                    <p><span class="font-bold">Password:</span> admin123</p>
+
+                </div>
+            </div>
+
+
+        </fieldset>
+    </section>
+
 
     <script src="scripts/script.js"></script>
 </body>
