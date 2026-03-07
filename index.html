@@ -31,7 +31,7 @@
 
 <body class="bg-[#F8FAFC] text-[16px]">
     <!-- login section -->
-    <section class="flex items-center justify-center min-h-screen">
+    <section id="loginform" class="hidden flex items-center justify-center min-h-screen">
         <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-8 text-[#374151] shadow-sm">
             <div class="flex flex-col items-center justify-center text-center">
                 <img src="assets/github-logo.png" alt="Github logo" class="mx-auto">
@@ -42,14 +42,14 @@
 
 
             <label class="label font-bold">Username</label>
-            <input type="text" class="input" placeholder="Enter Username" />
+            <input id="userName" type="text" class="input" placeholder="Enter Username" />
             <p class="text-blue-800">Defult: admin</p>
 
             <label class="label font-bold">Password</label>
-            <input type="password" class="input" placeholder="Enter Password" />
+            <input id="password" type="password" class="input" placeholder="Enter Password" />
             <p class="text-blue-800">Defult: admin123</p>
 
-            <button class="btn btn-primary mt-4 rounded-lg">Sign in</button>
+            <button id="signIn" class="btn btn-primary mt-4 rounded-lg">Sign in</button>
 
             <div class="flex items-center py-6">
                 <div class="flex-grow border-t border-gray-300"></div>
@@ -69,6 +69,69 @@
 
 
         </fieldset>
+    </section>
+
+    <section id="navbar">
+        <div class="navbar bg-base-100 shadow-sm">
+            <div class="flex-1 ml-20">
+                <div class="flex items-center  space-x-2">
+                    <img src="assets/github-logo.png" alt="github logo" class="w-12 h-12 object-contain">
+                    <h2 class="font-bold text-xl">GitHub Issues Tracker</h2>
+                </div>
+
+            </div>
+            <div class="flex gap-2 mr-20">
+                <input type="text" placeholder="Search issues..." class="input input-bordered w-24 md:w-auto" />
+
+                <button class="btn btn-primary">+ New Issue</button>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="filter" class="mt-15">
+        <div class="max-w-[1110px] mx-auto bg-white p-6 rounded shadow">
+            <form class="filter flex gap-2">
+                <button type="button" class="btn">Svelte</button>
+                <button type="button" class="btn">Vue</button>
+                <button type="button" class="btn">React</button>
+            </form>
+        </div>
+
+
+
+    </section>
+
+    <section id="cardholder" class="bg-[#FBFBFB] mt-4">
+        <div class="max-w-[1110px] mx-auto bg-white p-6 flex items-center justify-between rounded shadow">
+            <!-- Left side: issue count -->
+
+            <div class="flex align-middle gap-2">
+                <div class="w-[50px] h-[50px] bg-[#ECE4FF] rounded-full flex items-center justify-center">
+                    <img src="assets/Aperture.png" alt="" class="w-8 h-8 object-contain" />
+                </div>
+
+
+
+                <div>
+                    <h1 class="text-[20px] font-semibold">50 Issues</h1>
+                    <p class="text-[16px] text-[#64748B]">Track and manage your project issues</p>
+                </div>
+            </div>
+
+            <!-- Right side: legend marks -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 bg-[#00A96E] rounded-full"></span>
+                    <span class="text-sm">Open</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 bg-[#A855F7] rounded-full"></span>
+                    <span class="text-sm">Closed</span>
+                </div>
+            </div>
+        </div>
+
     </section>
 
 
