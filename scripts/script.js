@@ -11,12 +11,14 @@ const login = () => {
 
     if (username === defaultUser && password === defaultPass) {
         // alert("✅ Login successful!");
-        loadIssues();
+
         loginForm.classList.add("hidden");
 
         appSections.forEach(section => {
             section.classList.remove("hidden");
         });
+
+        loadIssues();
     } else {
         alert("❌ Invalid credentials. Please try again.");
     }
@@ -36,18 +38,31 @@ document.getElementById("signIn").addEventListener("click", login);
 //     modal.showModal();
 // });
 
+function showLoading() {
+
+    document.getElementById("loadingSpinner").classList.remove("hidden");
+    document.getElementById("cardHolder").innerHTML = "";
+}
+
+function hideLoading() {
+
+    document.getElementById("loadingSpinner").classList.add("hidden");
+
+}
+
 
 let allIssues = [];
 
 
 async function loadIssues() {
-
+    showLoading();
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
     const result = await res.json();
 
     allIssues = result.data;
 
     renderIssues(allIssues);
+    hideLoading();
 }
 
 function renderIssues(issues) {
@@ -71,14 +86,14 @@ const btnOpen = document.getElementById("filter_open");
 const btnClosed = document.getElementById("filter_closed");
 
 btnAll.addEventListener("click", () => {
-
+    searchInput.value = "";
     setActive(btnAll);
 
     renderIssues(allIssues);
 });
 
 btnOpen.addEventListener("click", () => {
-
+    searchInput.value = "";
     setActive(btnOpen);
 
     const filtered = allIssues.filter(issue => issue.status === "open");
@@ -87,7 +102,7 @@ btnOpen.addEventListener("click", () => {
 });
 
 btnClosed.addEventListener("click", () => {
-
+    searchInput.value = "";
     setActive(btnClosed);
 
     const filtered = allIssues.filter(issue => issue.status === "closed");
@@ -106,22 +121,39 @@ function setActive(activeBtn) {
     activeBtn.classList.add("btn-primary");
 }
 
+function clearActiveFilters() {
+
+    const buttons = document.querySelectorAll("#filter .btn");
+
+    buttons.forEach(btn => {
+        btn.classList.remove("btn-primary");
+    });
+
+}
+
 const searchInput = document.getElementById("search_input");
 
 searchInput.addEventListener("input", async () => {
 
     const query = searchInput.value.trim();
 
+    clearActiveFilters();
+
     if (query === "") {
 
         renderIssues(allIssues);
+        setActive(document.getElementById("filter_all"));
         return;
     }
+
+    showLoading();
 
     const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${query}`);
     const result = await res.json();
 
     renderIssues(result.data);
+
+    hideLoading();
 });
 
 
