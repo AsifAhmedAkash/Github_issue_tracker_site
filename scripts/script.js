@@ -32,25 +32,74 @@ document.getElementById("signIn").addEventListener("click", login);
 // });
 
 
+let allIssues = [];
+
+
 async function loadIssues() {
-    try {
-        const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
-        const result = await res.json();
 
-        const issues = result.data;
+    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
+    const result = await res.json();
 
-        const holder = document.getElementById("cardHolder");
-        holder.innerHTML = "";
+    allIssues = result.data;
 
-        issues.forEach(issue => {
-            createCard(issue);
-        });
-
-    } catch (error) {
-        console.log("Error fetching issues:", error);
-    }
+    renderIssues(allIssues);
 }
 
+function renderIssues(issues) {
+
+    const holder = document.getElementById("cardHolder");
+
+    holder.innerHTML = "";
+
+    issues.forEach(issue => {
+        createCard(issue);
+    });
+
+    const counter = document.getElementById("No_of_issues");
+
+    counter.textContent = `${issues.length} Issues`;
+}
+
+
+const btnAll = document.getElementById("filter_all");
+const btnOpen = document.getElementById("filter_open");
+const btnClosed = document.getElementById("filter_closed");
+
+btnAll.addEventListener("click", () => {
+
+    setActive(btnAll);
+
+    renderIssues(allIssues);
+});
+
+btnOpen.addEventListener("click", () => {
+
+    setActive(btnOpen);
+
+    const filtered = allIssues.filter(issue => issue.status === "open");
+
+    renderIssues(filtered);
+});
+
+btnClosed.addEventListener("click", () => {
+
+    setActive(btnClosed);
+
+    const filtered = allIssues.filter(issue => issue.status === "closed");
+
+    renderIssues(filtered);
+});
+
+function setActive(activeBtn) {
+
+    const buttons = document.querySelectorAll("#filter .btn");
+
+    buttons.forEach(btn => {
+        btn.classList.remove("btn-primary");
+    });
+
+    activeBtn.classList.add("btn-primary");
+}
 
 
 function createCard(issue) {
