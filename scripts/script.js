@@ -150,7 +150,93 @@ function createCard(issue) {
         </div>
     `;
 
+    card.addEventListener("click", () => {
+        openIssueModal(issue.id);
+    });
+
     holder.appendChild(card);
+}
+
+
+//modal related
+async function openIssueModal(id) {
+
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
+    const result = await res.json();
+
+    const issue = result.data;
+
+    populateModal(issue);
+
+    const modal = document.getElementById("issue_details");
+    modal.showModal();
+}
+
+function populateModal(issue) {
+
+    document.getElementById("modal_title").textContent = issue.title;
+
+    document.getElementById("modal_author").textContent =
+        `Opened by ${issue.author}`;
+
+    document.getElementById("modal_date").textContent =
+        new Date(issue.createdAt).toLocaleDateString();
+
+    document.getElementById("modal_description").textContent =
+        issue.description;
+
+    document.getElementById("modal_assignee").textContent =
+        issue.assignee || "Unassigned";
+
+
+    // STATUS
+    let statusHTML = "";
+
+    if (issue.status === "open") {
+        statusHTML = `<div class="badge badge-success">Open</div>`;
+    }
+    else {
+        statusHTML = `<div class="badge badge-secondary">Closed</div>`;
+    }
+
+    document.getElementById("modal_status").innerHTML = statusHTML;
+
+
+    // PRIORITY
+    let priorityHTML = "";
+
+    if (issue.priority === "high") {
+        priorityHTML = `<div class="badge badge-error">High</div>`;
+    }
+    else if (issue.priority === "medium") {
+        priorityHTML = `<div class="badge badge-warning">Medium</div>`;
+    }
+    else {
+        priorityHTML = `<div class="badge badge-ghost">Low</div>`;
+    }
+
+    document.getElementById("modal_priority").innerHTML = priorityHTML;
+
+
+    // LABELS
+    const labelContainer = document.getElementById("modal_labels");
+
+    labelContainer.innerHTML = issue.labels.map(label => {
+
+        if (label === "bug") {
+            return `<div class="badge badge-outline badge-error">BUG</div>`;
+        }
+
+        if (label === "help wanted") {
+            return `<div class="badge badge-outline badge-warning">HELP WANTED</div>`;
+        }
+
+        if (label === "enhancement") {
+            return `<div class="badge badge-outline badge-success">ENHANCEMENT</div>`;
+        }
+
+    }).join("");
+
 }
 
 //comment at last
