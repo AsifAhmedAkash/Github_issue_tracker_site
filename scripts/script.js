@@ -10,8 +10,13 @@ const login = () => {
     const loginForm = document.getElementById("loginform");
 
     if (username === defaultUser && password === defaultPass) {
-        alert("✅ Login successful!");
+        // alert("✅ Login successful!");
+        loadIssues();
         loginForm.classList.add("hidden");
+
+        appSections.forEach(section => {
+            section.classList.remove("hidden");
+        });
     } else {
         alert("❌ Invalid credentials. Please try again.");
     }
@@ -100,6 +105,24 @@ function setActive(activeBtn) {
 
     activeBtn.classList.add("btn-primary");
 }
+
+const searchInput = document.getElementById("search_input");
+
+searchInput.addEventListener("input", async () => {
+
+    const query = searchInput.value.trim();
+
+    if (query === "") {
+
+        renderIssues(allIssues);
+        return;
+    }
+
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${query}`);
+    const result = await res.json();
+
+    renderIssues(result.data);
+});
 
 
 function createCard(issue) {
@@ -290,4 +313,17 @@ function populateModal(issue) {
 
 //comment at last
 //will use it at login
-loadIssues();
+
+const appSections = document.querySelectorAll(".app-section");
+const loginForm = document.getElementById("loginform");
+
+function showLogin() {
+
+    loginForm.classList.remove("hidden");
+
+    appSections.forEach(section => {
+        section.classList.add("hidden");
+    });
+}
+
+showLogin();
